@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         云效塞满Emoji
 // @namespace    com.ui-ceiling.yoho.title-emoji
-// @version      1.0.3
+// @version      1.0.4
 // @description  云效创建/编辑  需求/任务时 标题允许输入Emoji
 // @author       UI-ceiling
 // @match        https://devops.aliyun.com/*
