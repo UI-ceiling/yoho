@@ -6,6 +6,8 @@
 // @author       UI-ceiling
 // @match        https://devops.aliyun.com/*
 // @icon         https://www.emojiall.com/images/60/microsoft-teams/1f923.png
+// @downloadURL  https://github.com/UI-ceiling/yoho/blob/main/title-emoji/index.user.js
+// @updateURL    https://github.com/UI-ceiling/yoho/blob/main/title-emoji/index.user.js
 // ==/UserScript==
 
 (() => {
