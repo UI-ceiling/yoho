@@ -11,6 +11,8 @@
 // @license      MIT
 // ==/UserScript==
 
+
+
 (() => {
   'use strict';
 
@@ -58,10 +60,10 @@
     });
 
   /** 模拟 React 内部输入变更 */
-  function simulateReactInput(inputEl, newValue = '1') {
+  function simulateReactInput(inputEl) {
     const lastValue = inputEl.value;
 
-    inputEl.value = newValue;
+    inputEl.value = new Date().getTime();
 
     const tracker = inputEl._valueTracker;
     if (tracker) {
