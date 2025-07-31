@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         云效塞满Emoji
 // @namespace    com.ui-ceiling.yoho.title-emoji
-// @version      1.0.2
+// @version      1.0.3
 // @description  云效创建/编辑  需求/任务时 标题允许输入Emoji
 // @author       UI-ceiling
 // @match        https://devops.aliyun.com/*
@@ -58,14 +58,19 @@
     });
 
   /** 模拟 React 内部输入变更 */
-  const simulateReactInput = (input, value) => {
-    if (input.value === value) return;
-    const time = Date.now();
-    input.value = time;
-    input._valueTracker?.setValue(time);
-    input.value = time;
-    input.dispatchEvent(new Event('input', { bubbles: true }));
-  };
+  function simulateReactInput(inputEl, newValue = '1') {
+    const lastValue = inputEl.value;
+
+    inputEl.value = newValue;
+
+    const tracker = inputEl._valueTracker;
+    if (tracker) {
+      tracker.setValue(lastValue); // 告诉 React：值变了
+    }
+
+    const inputEvent = new Event('input', { bubbles: true });
+    inputEl.dispatchEvent(inputEvent);
+  }
 
   /** 注入 emoji 输入框 */
   const injectNewInput = (origInput) => {
@@ -117,11 +122,15 @@
     if (padRight < 28) newInput.style.paddingRight = '28px';
 
     newInput.addEventListener('blur', () => {
-      const val = newInput.value.trim();
-      if (val) {
-        simulateReactInput(origInput, val);
-        origInput.dispatchEvent(new Event('blur', { bubbles: true }));
-      }
+      const newVal = newInput.value.trim();
+      if (!newVal) return;
+
+      // 模拟用户输入，更新原文本框
+      simulateReactInput(origInput);
+
+      // 触发原文本框的失焦事件
+      const blurEvent = new Event('blur', { bubbles: true });
+      origInput.dispatchEvent(blurEvent);
     });
 
     container.append(newInput, emoji);
