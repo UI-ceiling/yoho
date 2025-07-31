@@ -60,9 +60,10 @@
   /** 模拟 React 内部输入变更 */
   const simulateReactInput = (input, value) => {
     if (input.value === value) return;
-    input.value = '1';
-    input._valueTracker?.setValue(value);
-    input.value = value;
+    const time = Date.now();
+    input.value = time;
+    input._valueTracker?.setValue(time);
+    input.value = time;
     input.dispatchEvent(new Event('input', { bubbles: true }));
   };
 
