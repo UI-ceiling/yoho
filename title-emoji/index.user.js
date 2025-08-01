@@ -15,7 +15,7 @@
 // @description:fr      Autorise les emojis dans les titres de tâche/requête Yunxiao
 // @description:ko      윤샤오에서 작업/요구 제목에 이모지를 입력할 수 있게 함
 // @namespace    com.ui-ceiling.yoho.title-emoji
-// @version      1.0.5
+// @version      1.1.0
 // @description  云效创建/编辑  需求/任务时 标题允许输入Emoji
 // @author       UI-ceiling
 // @match        https://devops.aliyun.com/*
@@ -95,12 +95,14 @@
     const container = document.createElement('div');
     container.style.position = 'relative';
 
-    const newInput = document.createElement('textarea');
+    const tagName = origInput.tagName.toLowerCase(); // 'input' 或 'textarea'
+    const newInput = document.createElement(tagName);
     Object.assign(newInput, {
       id: NEW_INPUT_ID,
       value: origInput.value,
-      placeholder: '这里输入内容会覆盖 PATCH 请求的 propertyValue',
+      placeholder: '请输入标题',
       className: origInput.className,
+      type: origInput.type || 'text',
     });
     newInput.style.cssText = origInput.style.cssText;
 
@@ -156,7 +158,10 @@
 
   /** 显示提示 */
   const showToast = (message, duration = 3000) => {
-    document.getElementById('emoji-toast')?.remove();
+    const old = document.getElementById('emoji-toast');
+    if (old) {
+      old.remove(); // 强制移除旧吐司，避免堆叠
+    }
 
     const toast = document.createElement('div');
     Object.assign(toast, {
@@ -175,7 +180,7 @@
       fontSize: '34px',
       zIndex: 9999,
       opacity: '0',
-      transition: 'opacity 0.5s ease',
+      transition: 'opacity 0.3s ease',
       pointerEvents: 'none',
       userSelect: 'none',
     });
@@ -236,4 +241,51 @@
     }
     return rawSend.call(this, body);
   };
+
+  window.addEventListener('keydown', (e) => {
+    const isMac = navigator.platform.toUpperCase().includes('MAC');
+    const isCtrl = isMac ? e.metaKey : e.ctrlKey;
+
+    if (isCtrl && e.shiftKey && e.altKey && e.key.toLowerCase() === 'e') {
+      e.preventDefault();
+      showToast('⌛️ 手动注入 ！');
+      initInject().then(() => {
+        showToast('🤣 Emoji 输入框注入成功！');
+      }).catch(() => {
+        showToast('❌ 注入失败，请检查元素是否存在');
+      });
+    }
+  });
+
+  const observeInputRemoval = () => {
+    let hasAppeared = false;
+    let reInjecting = false;
+
+    const observer = new MutationObserver(() => {
+      const input = document.getElementById(NEW_INPUT_ID);
+
+      if (input) {
+        hasAppeared = true;
+        reInjecting = false;
+        return; // 一切正常
+      }
+
+      // 若已出现过但现在被移除，触发注入（节流避免过度触发）
+      if (hasAppeared && !reInjecting) {
+        reInjecting = true;
+        console.log('[Tampermonkey] emoji 输入框被移除，尝试重新注入...');
+        // showToast('⚠️ Emoji 输入框被移除，尝试恢复...');
+        initInject().finally(() => {
+          setTimeout(() => (reInjecting = false), 1000); // 1秒节流
+        });
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  };
+
+  observeInputRemoval(); // 启动输入框丢失监听
 })();
