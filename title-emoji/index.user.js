@@ -3,7 +3,7 @@
 // @name:en      Yunxiao Full Emoji
 // @name:zh-cn   云效塞满Emoji
 // @namespace    com.ui-ceiling.yoho.title-emoji
-// @version      1.1.0
+// @version      1.1.1
 // @description  云效创建/编辑  需求/任务时 标题允许输入Emoji
 // @description:zh-cn 允许在云效标题中输入 Emoji 表情
 // @author       UI-ceiling
@@ -91,7 +91,6 @@
       value: origInput.value,
       placeholder: '请输入标题',
       className: origInput.className,
-      type: origInput.type || 'text',
     });
     newInput.style.cssText = origInput.style.cssText;
 
@@ -262,7 +261,7 @@
       // 若已出现过但现在被移除，触发注入（节流避免过度触发）
       if (hasAppeared && !reInjecting) {
         reInjecting = true;
-        console.log('[Tampermonkey] emoji 输入框被移除，尝试重新注入...');
+        console.log('⌛️ emoji 输入框被移除，尝试重新注入...');
         // showToast('⚠️ Emoji 输入框被移除，尝试恢复...');
         initInject().finally(() => {
           setTimeout(() => (reInjecting = false), 1000); // 1秒节流
