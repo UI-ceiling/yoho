@@ -3,7 +3,7 @@
 // @name:en      Yunxiao Full Emoji
 // @name:zh-cn   云效塞满Emoji
 // @namespace    com.ui-ceiling.yoho.title-emoji
-// @version      1.1.2
+// @version      1.1.3
 // @description  云效创建/编辑  需求/任务时 标题允许输入Emoji
 // @description:zh-cn 允许在云效标题中输入 Emoji 表情
 // @author       UI-ceiling
@@ -129,7 +129,9 @@
 
     newInput.addEventListener('blur', () => {
       const newVal = newInput.value.trim();
-      if (!newVal) return;
+      const oldVal = origInput.value.trim();
+
+      if (!newVal || newVal === oldVal) return; // 相同就不触发更新
 
       // 模拟用户输入，更新原文本框
       simulateReactInput(origInput);
