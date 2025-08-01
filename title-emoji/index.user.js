@@ -3,17 +3,6 @@
 // @name:en      Yunxiao Full Emoji
 // @name:zh-CN   云效塞满Emoji
 // @name:zh-TW   雲效塞滿Emoji
-// @name:ja      Yunxiao絵文字満載
-// @name:de      Yunxiao Emoji-Erweiterung
-// @name:fr      Yunxiao Rempli d’Emojis
-// @name:ko      윤샤오 이모지 꽉 채우기
-// @description         云效创建/编辑需求、任务标题时支持输入 Emoji
-// @description:en      Allow emojis in Yunxiao task/requirement titles
-// @description:zh-TW   在雲效建立/編輯需求與任務標題時支援輸入 Emoji
-// @description:ja      Yunxiaoのタスク/要件タイトルで絵文字を使用可能に
-// @description:de      Erlaubt Emojis in Titeln von Aufgaben/Anforderungen in Yunxiao
-// @description:fr      Autorise les emojis dans les titres de tâche/requête Yunxiao
-// @description:ko      윤샤오에서 작업/요구 제목에 이모지를 입력할 수 있게 함
 // @namespace    com.ui-ceiling.yoho.title-emoji
 // @version      1.1.0
 // @description  云效创建/编辑  需求/任务时 标题允许输入Emoji
