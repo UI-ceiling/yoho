@@ -3,7 +3,7 @@
 // @name:en      Yunxiao Full Emoji
 // @name:zh-cn   云效塞满Emoji
 // @namespace    com.ui-ceiling.yoho.title-emoji
-// @version      1.1.1
+// @version      1.1.2
 // @description  云效创建/编辑  需求/任务时 标题允许输入Emoji
 // @description:zh-cn 允许在云效标题中输入 Emoji 表情
 // @author       UI-ceiling
@@ -218,9 +218,13 @@
       ) {
         const parsed = JSON.parse(body);
         const override = document.getElementById(NEW_INPUT_ID)?.value?.trim();
-        if (override && typeof parsed?.propertyValue !== 'undefined') {
+        if (override) {
           console.log('[Tampermonkey] 已覆盖 propertyValue:', override);
-          parsed.propertyValue = override;
+          if(method === 'PATCH') {
+            parsed.propertyValue = override;
+          }else{
+            parsed.subject = override;
+          }
           body = JSON.stringify(parsed);
         }
       }
