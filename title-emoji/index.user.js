@@ -6,6 +6,8 @@
 // @namespace    com.ui-ceiling.yoho.title-emoji
 // @version      1.1.0
 // @description  云效创建/编辑  需求/任务时 标题允许输入Emoji
+// @description:zh-CN 允许在云效标题中输入 Emoji 表情
+// @description:zh-TW 允許在雲效標題中輸入 Emoji 表情
 // @author       UI-ceiling
 // @match        https://devops.aliyun.com/*
 // @icon         https://www.emojiall.com/images/60/microsoft-teams/1f923.png
